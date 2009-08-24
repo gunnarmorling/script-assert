@@ -1,4 +1,4 @@
-package de.gmorling;
+package de.gmorling.beanvalidation.scriptassert;
 
 import static java.lang.annotation.ElementType.*;
 import static java.lang.annotation.RetentionPolicy.*;
@@ -17,7 +17,7 @@ import javax.validation.ConstraintPayload;
 @Documented
 public @interface ScriptAssert {
 
-	String message() default "{de.gmorling.scriptassert}";
+	String message() default "{de.gmorling.beanvalidation.scriptassert}";
 
 	Class<?>[] groups() default {};
 

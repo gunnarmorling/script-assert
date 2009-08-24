@@ -1,4 +1,4 @@
-package de.gmorling.scriptassert;
+package de.gmorling.beanvalidation.scriptassert;
 
 import static org.junit.Assert.*;
 
@@ -10,27 +10,24 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import de.gmorling.scriptassert.model.CalendarEvent;
+import de.gmorling.beanvalidation.scriptassert.model.CalendarEvent;
 
 public class CalendarEventTest {
 
 	private static Validator validator;
 
-	private Date startDate;
+	private static Date startDate;
 
-	private Date endDate;
+	private static Date endDate;
 
 	@BeforeClass
-	public static void setUpValidator() {
-		validator = Validation.buildDefaultValidatorFactory().getValidator();
-	}
+	public static void setUpValidatorAndDates() {
 
-	@Before
-	public void setUpDates() {
+		validator = Validation.buildDefaultValidatorFactory().getValidator();
+
 		startDate = new GregorianCalendar(2009, 8, 20).getTime();
 		endDate = new GregorianCalendar(2009, 8, 21).getTime();
 	}
@@ -47,15 +44,15 @@ public class CalendarEventTest {
 	@Test
 	public void invalidCalendarEvent() {
 
-		CalendarEvent testOrder = new CalendarEvent("Team meeting", endDate,
+		CalendarEvent testEvent = new CalendarEvent("Team meeting", endDate,
 				startDate);
 
 		Set<ConstraintViolation<CalendarEvent>> constraintViolations = validator
-				.validate(testOrder);
+				.validate(testEvent);
 		assertEquals(1, constraintViolations.size());
 
 		assertEquals(
-				"Script statement \"_this.creationDate.before(_this.shipmentDate)\" didn't evaluate to TRUE.",
+				"Script statement \"_this.startDate.before(_this.endDate)\" didn't evaluate to TRUE.",
 				constraintViolations.iterator().next().getMessage());
 	}
 

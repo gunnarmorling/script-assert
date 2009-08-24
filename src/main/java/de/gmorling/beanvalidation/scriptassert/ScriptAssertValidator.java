@@ -1,4 +1,4 @@
-package de.gmorling;
+package de.gmorling.beanvalidation.scriptassert;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
@@ -15,13 +15,14 @@ public class ScriptAssertValidator implements
 
 	private ScriptEngineManager manager = new ScriptEngineManager();
 
-	public void initialize(ScriptAssert arg0) {
+	public void initialize(ScriptAssert constraintAnnotation) {
 
-		this.script = arg0.script();
-		this.languageName = arg0.lang();
+		this.script = constraintAnnotation.script();
+		this.languageName = constraintAnnotation.lang();
 	}
 
-	public boolean isValid(Object arg0, ConstraintValidatorContext arg1) {
+	public boolean isValid(Object value,
+			ConstraintValidatorContext constraintValidatorContext) {
 
 		ScriptEngine engine = manager.getEngineByName(languageName);
 
@@ -31,7 +32,7 @@ public class ScriptAssertValidator implements
 							+ languageName);
 		}
 
-		engine.put("_this", arg0);
+		engine.put("_this", value);
 
 		try {
 			return Boolean.TRUE.equals(engine.eval(script));
