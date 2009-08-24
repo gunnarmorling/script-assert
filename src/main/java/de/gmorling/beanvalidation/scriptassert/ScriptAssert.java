@@ -11,6 +11,23 @@ import javax.script.ScriptEngineManager;
 import javax.validation.Constraint;
 import javax.validation.ConstraintPayload;
 
+/**
+ * <p>
+ * A constraint annotation for the <a
+ * href="http://jcp.org/en/jsr/detail?id=303">Bean Validation API</a>, that
+ * allows to express constraints using any <a
+ * href="http://jcp.org/en/jsr/detail?id=223">JSR 223</a> compatible scripting
+ * or expression language.
+ * </p>
+ * <p>
+ * Accepts any type.
+ * <p>
+ * </p>
+ * Based on the similar concept of the <a
+ * href="http://oval.sourceforge.net/">OVal framework</a>. </p>
+ * 
+ * @author Gunnar Morling
+ */
 @Target( { TYPE })
 @Retention(RUNTIME)
 @Constraint(validatedBy = ScriptAssertValidator.class)
@@ -30,10 +47,17 @@ public @interface ScriptAssert {
 	 */
 	String lang();
 
+	/**
+	 * 
+	 * @return The script to be executed. The script must return Boolean.TRUE,
+	 *         if the given object could successfully be validated, otherwise
+	 *         Boolean.FALSE. Within the script, the validated object can be
+	 *         accessed from the script context using the name "_this".
+	 */
 	String script();
 
 	/**
-	 * Defines several @ScriptAssert annotations on the same element
+	 * Defines several @ScriptAssert annotations on the same element.
 	 * 
 	 * @see ScriptAssert
 	 * 
