@@ -5,10 +5,10 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.gmorling</groupId>
-	<artifactId>scriptassert</artifactId>
+	<artifactId>script-assert</artifactId>
 	<packaging>jar</packaging>
 	<version>0.1-SNAPSHOT</version>
-	<name>scriptassert</name>
+	<name>script-assert</name>
 
 	<dependencies>
 		<dependency>
@@ -19,28 +19,27 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-validator</artifactId>
-			<version>4.0.0.Beta3</version>
-			<scope>runtime</scope>
-		</dependency>
-
-		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.7</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.codehaus.groovy</groupId>
-			<artifactId>groovy-all</artifactId>
-			<version>1.6.4</version>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>4.0.0.Beta3</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-jdk14</artifactId>
 			<version>1.5.6</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.groovy</groupId>
+			<artifactId>groovy-all</artifactId>
+			<version>1.6.4</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -69,27 +68,18 @@
 		</plugins>
 	</build>
 
-	<!-- The script API is part of JDK 6. For JDK 5 it has to be added as
-	dependency explicitly. The only place where it seems available is the Mule repo -->
-	<profiles>
-		<profile>
-			<activation>
-				<jdk>1.5</jdk>
-			</activation>
-			<dependencies>
-				<dependency>
-					<groupId>javax.script</groupId>
-					<artifactId>script-api</artifactId>
-					<version>1.0</version>
-				</dependency>
-			</dependencies>
-			<repositories>
-				<repository>
-					<id>dist.codehaus.org/mule</id>
-					<name>Mule Repository for Maven 2</name>
-					<url>http://dist.codehaus.org/mule/dependencies/maven2/</url>
-				</repository>
-			</repositories>
-		</profile>
-	</profiles>
+	<!-- mvn release:prepare will create a tag here -->
+	<scm>
+		<connection>scm:git:git://github.com/gunnarmorling/script-assert.git</connection>
+	</scm>
+
+	<!-- mvn release:perform will deploy the JAR files here -->
+	<distributionManagement>
+		<repository>
+			<uniqueVersion>false</uniqueVersion>
+			<id>googlecode</id>
+			<url>svn:https://gunnarmorling-maven-repo.googlecode.com/svn/repo</url>
+		</repository>
+	</distributionManagement>
+	
 </project>
