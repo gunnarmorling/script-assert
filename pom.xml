@@ -1,12 +1,14 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project 
+	xmlns="http://maven.apache.org/POM/4.0.0" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.gmorling</groupId>
-	<artifactId>scriptingvalidation</artifactId>
+	<artifactId>scriptassert</artifactId>
 	<packaging>jar</packaging>
 	<version>0.1-SNAPSHOT</version>
-	<name>scriptingvalidation</name>
+	<name>scriptassert</name>
 
 	<dependencies>
 		<dependency>
@@ -14,6 +16,20 @@
 			<artifactId>validation-api</artifactId>
 			<version>1.0.CR4</version>
 			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>4.0.0.Beta3</version>
+			<scope>runtime</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.7</version>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.codehaus.groovy</groupId>
@@ -25,19 +41,6 @@
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-jdk14</artifactId>
 			<version>1.5.6</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-validator</artifactId>
-			<version>4.0.0.Beta3</version>
-			<scope>compile</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.7</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -66,5 +69,27 @@
 		</plugins>
 	</build>
 
-
+	<!-- The script API is part of JDK 6. For JDK 5 it has to be added as
+	dependency explicitly. The only place where it seems available is the Mule repo -->
+	<profiles>
+		<profile>
+			<activation>
+				<jdk>1.5</jdk>
+			</activation>
+			<dependencies>
+				<dependency>
+					<groupId>javax.script</groupId>
+					<artifactId>script-api</artifactId>
+					<version>1.0</version>
+				</dependency>
+			</dependencies>
+			<repositories>
+				<repository>
+					<id>dist.codehaus.org/mule</id>
+					<name>Mule Repository for Maven 2</name>
+					<url>http://dist.codehaus.org/mule/dependencies/maven2/</url>
+				</repository>
+			</repositories>
+		</profile>
+	</profiles>
 </project>
