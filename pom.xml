@@ -4,7 +4,7 @@
 	<groupId>de.gmorling</groupId>
 	<artifactId>script-assert</artifactId>
 	<packaging>jar</packaging>
-	<version>0.3</version>
+	<version>0.4-SNAPSHOT</version>
 	<name>script-assert</name>
 
 	<dependencies>
